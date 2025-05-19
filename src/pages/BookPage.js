@@ -10,7 +10,7 @@ const BookPage = () => {
             <h2>Réserver</h2>
             <p>Merci de remplir les champs pour prendre votre rdv</p>
             <Reservation />
-            <button>Valider</button>
+            
         </div>
     );
 }
