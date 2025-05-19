@@ -1,5 +1,6 @@
 import React from "react";
 import NavBar from "../NavBar";
+import MesRDV from "../MesRDV";
 
 const DashboardPage = () => {
     return (
@@ -7,6 +8,7 @@ const DashboardPage = () => {
             <NavBar />
             <h2>Tableau de bord</h2>
             <p>Liste des demande de rendez vous</p>
+            <MesRDV />
         </div>
     );
 }
