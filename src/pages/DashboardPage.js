@@ -7,7 +7,6 @@ const DashboardPage = () => {
         <div>
             <NavBar />
             <h2>Tableau de bord</h2>
-            <p>Liste des demande de rendez vous</p>
             <MesRDV />
         </div>
     );

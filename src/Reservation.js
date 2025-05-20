@@ -6,68 +6,65 @@ const Reservation = () => {
   const [date, setDate] = useState("");
   const [specialite, setSpecialite] = useState("");
 
-  // Fonctions de validation
-  const nomEstValide = /^[A-Za-zÀ-ÿ\s\-]+$/.test(nom);
-  const prenomEstValide = /^[A-Za-zÀ-ÿ\s\-]+$/.test(prenom);
+  // Validations (raccourci)
+  const nomOK = /^[A-Za-zÀ-ÿ\s\-]+$/.test(nom);
+  const prenomOK = /^[A-Za-zÀ-ÿ\s\-]+$/.test(prenom);
+  const dateOK = date && new Date(date) > new Date(new Date().setHours(0,0,0,0));
 
-  const dateEstValide = (() => {
-    if (!date) return false;
-    const aujourdHui = new Date();
-    const dateChoisie = new Date(date);
-    // Supprimer l'heure pour une comparaison de dates uniquement
-    aujourdHui.setHours(0, 0, 0, 0);
-    return dateChoisie > aujourdHui;
-  })();
-
-  const tousLesChampsRemplis =
-    nom && prenom && date && specialite &&
-    nomEstValide && prenomEstValide && dateEstValide;
+  const canSubmit = nom && prenom && date && specialite && nomOK && prenomOK && dateOK;
 
   const handleSubmit = () => {
-    alert("Réservation validée !");
+    // On crée l'objet réservation
+    const nouvelleResa = {
+      nom,
+      prenom,
+      date,
+      specialite,
+      etat: "En attente de confirmation"
+    };
+
+    // On récupère l'existant ou un tableau vide
+    const toutesResa = JSON.parse(localStorage.getItem("mesRDVs") || "[]");
+    toutesResa.push(nouvelleResa);
+
+    // On réécrit dans le LocalStorage
+    localStorage.setItem("mesRDVs", JSON.stringify(toutesResa));
+
+    // On peut vider le formulaire
+    setNom("");
+    setPrenom("");
+    setDate("");
+    setSpecialite("");
+    alert("Réservation enregistrée !");
   };
 
   return (
     <div>
       <p>Nom :</p>
-      <input
-        type="text"
-        placeholder="Écrivez ici"
-        value={nom}
-        onChange={(e) => setNom(e.target.value)}
-      />
-      {!nomEstValide && nom && <p style={{ color: "red" }}>Le nom ne doit pas contenir de chiffres.</p>}
+      <input value={nom} onChange={e => setNom(e.target.value)} type="text" />
+      {!nomOK && nom && <small style={{color:"red"}}>Pas de chiffres !</small>}
 
       <p>Prénom :</p>
-      <input
-        type="text"
-        placeholder="Écrivez ici"
-        value={prenom}
-        onChange={(e) => setPrenom(e.target.value)}
-      />
-      {!prenomEstValide && prenom && <p style={{ color: "red" }}>Le prénom ne doit pas contenir de chiffres.</p>}
+      <input value={prenom} onChange={e => setPrenom(e.target.value)} type="text" />
+      {!prenomOK && prenom && <small style={{color:"red"}}>Pas de chiffres !</small>}
 
       <p>Date du rdv :</p>
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
-      {!dateEstValide && date && <p style={{ color: "red" }}>La date doit être après aujourd'hui.</p>}
+      <input value={date} onChange={e => setDate(e.target.value)} type="date" />
+      {!dateOK && date && <small style={{color:"red"}}>Doit être après aujourd’hui</small>}
 
       <p>Spécialité :</p>
-      <select value={specialite} onChange={(e) => setSpecialite(e.target.value)}>
-        <option value="">-- Choisissez une spécialité --</option>
-        <option value="generaliste">Généraliste</option>
-        <option value="chirurgien">Chirurgien</option>
-        <option value="cardiologue">Cardiologue</option>
-        <option value="radiologue">Radiologue</option>
-        <option value="pediatre">Pédiatre</option>
-        <option value="neurologue">Neurologue</option>
+      <select value={specialite} onChange={e => setSpecialite(e.target.value)}>
+        <option value="">--Choisissez--</option>
+        <option value="Généraliste">Généraliste</option>
+        <option value="Chirurgien">Chirurgien</option>
+        <option value="Cardiologue">Cardiologue</option>
+        <option value="Radiologue">Radiologue</option>
+        <option value="Pédiatre">Pédiatre</option>
+        <option value="Neurologue">Neurologue</option>
       </select>
 
       <br /><br />
-      <button onClick={handleSubmit} disabled={!tousLesChampsRemplis}>
+      <button onClick={handleSubmit} disabled={!canSubmit}>
         Valider
       </button>
     </div>
