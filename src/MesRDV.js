@@ -4,24 +4,22 @@ const MesRDV = () => {
   const [rdvs, setRdvs] = useState([]);
 
   useEffect(() => {
-    // Récupère et parse le tableau de réservations
-    const toutesResa = JSON.parse(localStorage.getItem("mesRDVs") || "[]");
-    setRdvs(toutesResa);
+    fetch("http://localhost:3001/api/rdvs")
+      .then(res => res.json())
+      .then(data => setRdvs(data));
   }, []);
 
-  if (rdvs.length === 0) {
-    return <p>Vous n'avez pas encore de réservation.</p>;
-  }
+  if (rdvs.length === 0) return <p>Aucun rendez-vous</p>;
 
   return (
     <div>
       <h2>Mes rendez-vous</h2>
-      {rdvs.map((r, i) => (
-        <div key={i} style={{border:"1px solid #ccc", padding:"8px", margin:"8px 0"}}>
-          <p><strong>État :</strong> {r.etat}</p>
-          <p><strong>Date :</strong> {new Date(r.date).toLocaleDateString()}</p>
+      {rdvs.map(r => (
+        <div key={r.id} style={{ border: "1px solid #ccc", margin: "8px", padding: "8px" }}>
           <p><strong>Nom :</strong> {r.nom} {r.prenom}</p>
+          <p><strong>Date :</strong> {new Date(r.date_rdv).toLocaleDateString()}</p>
           <p><strong>Spécialité :</strong> {r.specialite}</p>
+          <p><strong>État :</strong> {r.etat}</p>
         </div>
       ))}
     </div>

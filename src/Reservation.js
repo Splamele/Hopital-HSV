@@ -3,70 +3,47 @@ import React, { useState } from "react";
 const Reservation = () => {
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
-  const [date, setDate] = useState("");
+  const [date_rdv, setDate] = useState("");
   const [specialite, setSpecialite] = useState("");
 
-  // Validations (raccourci)
-  const nomOK = /^[A-Za-zÀ-ÿ\s\-]+$/.test(nom);
-  const prenomOK = /^[A-Za-zÀ-ÿ\s\-]+$/.test(prenom);
-  const dateOK = date && new Date(date) > new Date(new Date().setHours(0,0,0,0));
-
-  const canSubmit = nom && prenom && date && specialite && nomOK && prenomOK && dateOK;
-
   const handleSubmit = () => {
-    // On crée l'objet réservation
-    const nouvelleResa = {
-      nom,
-      prenom,
-      date,
-      specialite,
-      etat: "En attente de confirmation"
-    };
+    if (!nom || !prenom || !date_rdv || !specialite) {
+      alert("Veuillez remplir tous les champs !");
+      return;
+    }
 
-    // On récupère l'existant ou un tableau vide
-    const toutesResa = JSON.parse(localStorage.getItem("mesRDVs") || "[]");
-    toutesResa.push(nouvelleResa);
-
-    // On réécrit dans le LocalStorage
-    localStorage.setItem("mesRDVs", JSON.stringify(toutesResa));
-
-    // On peut vider le formulaire
-    setNom("");
-    setPrenom("");
-    setDate("");
-    setSpecialite("");
-    alert("Réservation enregistrée !");
+    fetch("http://localhost:3001/api/reservation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ nom, prenom, date_rdv, specialite })
+    })
+    .then(res => res.text())
+    .then(msg => alert(msg));
   };
 
   return (
     <div>
       <p>Nom :</p>
-      <input value={nom} onChange={e => setNom(e.target.value)} type="text" />
-      {!nomOK && nom && <small style={{color:"red"}}>Pas de chiffres !</small>}
+      <input type="text" onChange={e => setNom(e.target.value)} />
 
       <p>Prénom :</p>
-      <input value={prenom} onChange={e => setPrenom(e.target.value)} type="text" />
-      {!prenomOK && prenom && <small style={{color:"red"}}>Pas de chiffres !</small>}
+      <input type="text" onChange={e => setPrenom(e.target.value)} />
 
-      <p>Date du rdv :</p>
-      <input value={date} onChange={e => setDate(e.target.value)} type="date" />
-      {!dateOK && date && <small style={{color:"red"}}>Doit être après aujourd’hui</small>}
+      <p>Date du rendez-vous :</p>
+      <input type="date" onChange={e => setDate(e.target.value)} />
 
       <p>Spécialité :</p>
-      <select value={specialite} onChange={e => setSpecialite(e.target.value)}>
-        <option value="">--Choisissez--</option>
-        <option value="Généraliste">Généraliste</option>
-        <option value="Chirurgien">Chirurgien</option>
+      <select onChange={e => setSpecialite(e.target.value)}>
+        <option value="">-- Choisissez --</option>
+        <option value="Generaliste">Généraliste</option>
         <option value="Cardiologue">Cardiologue</option>
         <option value="Radiologue">Radiologue</option>
-        <option value="Pédiatre">Pédiatre</option>
-        <option value="Neurologue">Neurologue</option>
       </select>
 
       <br /><br />
-      <button onClick={handleSubmit} disabled={!canSubmit}>
-        Valider
-      </button>
+      <button onClick={handleSubmit}>Valider</button>
     </div>
   );
 };
