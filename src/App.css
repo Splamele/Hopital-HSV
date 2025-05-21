@@ -1,4 +1,138 @@
-nav {
-    
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-background-color: #0097b2;
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f9ff;
+  color: #00677a;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Container principal */
+.container {
+  max-width: 800px;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 47, 95, 0.1);
+  padding: 30px;
+}
+
+/* Titres */
+h1, h2 {
+  text-align: center;
+  color: #00677a;
+  margin-bottom: 20px;
+}
+
+/* Champs de formulaire */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 20px;
+  border: 1px solid #cce0f5;
+  border-radius: 5px;
+  background-color: #f0f8ff;
+  font-size: 16px;
+}
+
+/* Bouton */
+button {
+  background-color: #00677a;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #005bb5;
+}
+
+/* Carte de rendez-vous */
+.rdv-card {
+  border: 1px solid #dbe9ff;
+  border-left: 6px solid #00677a;
+  background-color: #fefeff;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+/* État du rendez-vous */
+.rdv-card p strong {
+  display: inline-block;
+  width: 120px;
+}
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #0097b2;
+  padding: 15px 30px;
+  border-bottom: 2px solid #00677a;
+  z-index: 1000;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  font-size: 18px;
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #cce6ff;
+}
+
+/* Pour éviter que le contenu passe sous la nav */
+body {
+  padding-top: 80px; /* ajuste selon la hauteur de la nav */
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* espace entre les images */
+  flex-wrap: wrap; /* permet de passer à la ligne si trop d'images */
+  margin-top: 40px;
+}
+
+.image-item {
+  max-width: 500px; /* taille réduite */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.image-item:hover {
+  transform: scale(1.05); /* effet zoom au survol */
+}
+
+
+
+/*mes 2 bleu clair et foncé : #0097b2 #00677a*/

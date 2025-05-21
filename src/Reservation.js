@@ -40,6 +40,9 @@ const Reservation = () => {
         <option value="Generaliste">Généraliste</option>
         <option value="Cardiologue">Cardiologue</option>
         <option value="Radiologue">Radiologue</option>
+        <option value="Pédiatre">Pédiatre</option>
+        <option value="Chirurgien">Chirurgien</option>
+        <option value="Neurologue">Neurologue</option>
       </select>
 
       <br /><br />

@@ -16,10 +16,10 @@ const MesRDV = () => {
       <h2>Mes rendez-vous</h2>
       {rdvs.map(r => (
         <div key={r.id} style={{ border: "1px solid #ccc", margin: "8px", padding: "8px" }}>
-          <p><strong>Nom :</strong> {r.nom} {r.prenom}</p>
+          <p><strong>Nom et Prenom :</strong> {r.nom} {r.prenom}</p>
           <p><strong>Date :</strong> {new Date(r.date_rdv).toLocaleDateString()}</p>
           <p><strong>Spécialité :</strong> {r.specialite}</p>
-          <p><strong>État :</strong> {r.etat}</p>
+          <p><strong>État :</strong> {r.statut}</p>
         </div>
       ))}
     </div>
