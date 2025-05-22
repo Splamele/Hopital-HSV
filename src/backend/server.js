@@ -22,8 +22,8 @@ db.connect(err => {
 // Enregistrement de réservation
 app.post("/api/reservation", (req, res) => {
   const { nom, prenom, date_rdv, specialite} = req.body;
-  const sql = "INSERT INTO reservations (nom, prenom, date_rdv, specialite, statut) VALUES (?, ?, ?, ?)";
-  db.query(sql, [nom, prenom, date_rdv, specialite], (err, result) => {
+  const sql = "INSERT INTO reservations (nom, prenom, date_rdv, specialite, statut) VALUES (?, ?, ?, ?, ?)";
+  db.query(sql, [nom, prenom, date_rdv, specialite, "en attente"], (err, result) => {
     if (err) return res.status(500).send(err);
     res.send("Réservation enregistrée !");
   });

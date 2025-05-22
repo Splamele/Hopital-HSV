@@ -23,12 +23,6 @@ body {
   padding: 30px;
 }
 
-/* Titres */
-h1, h2 {
-  text-align: center;
-  color: #00677a;
-  margin-bottom: 20px;
-}
 
 /* Champs de formulaire */
 input, select {
@@ -72,23 +66,34 @@ button:hover {
   display: inline-block;
   width: 120px;
 }
-/* Navigation */
 nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #0097b2;
-  padding: 15px 30px;
-  border-bottom: 2px solid #00677a;
+  background-color: #006d77;
+  padding: 10px 30px;
+  border-bottom: 3px solid #004d52;
   z-index: 1000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+nav h1 {
+  color: #e0f7fa;
+  font-size: 26px;
+  margin: 0;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 nav ul {
   list-style: none;
   display: flex;
-  justify-content: center;
-  gap: 40px;
+  gap: 30px;
   margin: 0;
   padding: 0;
 }
@@ -101,37 +106,53 @@ nav a {
   color: #ffffff;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
+  padding: 6px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 nav a:hover {
-  color: #cce6ff;
+  background-color: #00b4d8;
 }
+
 
 /* Pour éviter que le contenu passe sous la nav */
 body {
   padding-top: 80px; /* ajuste selon la hauteur de la nav */
 }
 
+.homepage {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f0f8ff;
+}
 .image-container {
   display: flex;
   justify-content: center;
-  gap: 20px; /* espace entre les images */
-  flex-wrap: wrap; /* permet de passer à la ligne si trop d'images */
-  margin-top: 40px;
+  gap: 120px; /* Plus d'espace entre les deux images */
+  flex-wrap: wrap;
+  margin-top: 30px;
 }
 
-.image-item {
-  max-width: 500px; /* taille réduite */
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
+.image-block {
+  width: 320px; /* Taille uniforme pour tous les blocs */
+  text-align: center;
 }
 
-.image-item:hover {
-  transform: scale(1.05); /* effet zoom au survol */
+.image-block img {
+  width: 100%;
+  height: 200px; /* Hauteur fixe pour toutes les images */
+  object-fit: cover; /* Maintient les proportions sans déformer */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.image-caption {
+  margin-top: 12px;
+  font-size: 16px;
+  color: #333;
+}
+
 
 
 
