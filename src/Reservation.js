@@ -7,8 +7,22 @@ const Reservation = () => {
   const [specialite, setSpecialite] = useState("");
 
   const handleSubmit = () => {
+    const nameRegex = /^[A-Za-zÀ-ÿ\s'-]+$/;
+
     if (!nom || !prenom || !date_rdv || !specialite) {
       alert("Veuillez remplir tous les champs !");
+      return;
+    }
+
+    if (!nameRegex.test(nom) || !nameRegex.test(prenom)) {
+      alert("Le nom et le prénom doivent contenir uniquement des lettres. ");
+      return;
+    }
+
+    const now = new Date();
+    const rdvDate = new Date(date_rdv);
+    if (rdvDate <= now) {
+      alert("La date du rendez-vous doit être dans le futur.");
       return;
     }
 
@@ -19,8 +33,8 @@ const Reservation = () => {
       },
       body: JSON.stringify({ nom, prenom, date_rdv, specialite })
     })
-    .then(res => res.text())
-    .then(msg => alert(msg));
+      .then(res => res.text())
+      .then(msg => alert(msg));
   };
 
   return (
@@ -32,7 +46,11 @@ const Reservation = () => {
       <input type="text" onChange={e => setPrenom(e.target.value)} />
 
       <p>Date du rendez-vous :</p>
-      <input type="date" onChange={e => setDate(e.target.value)} />
+      <input
+        type="date"
+        min={new Date().toISOString().split("T")[0]}
+        onChange={e => setDate(e.target.value)}
+      />
 
       <p>Spécialité :</p>
       <select onChange={e => setSpecialite(e.target.value)}>
