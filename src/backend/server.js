@@ -19,15 +19,29 @@ db.connect(err => {
   console.log("Connecté à MySQL !");
 });
 
-// Enregistrement de réservation
 app.post("/api/reservation", (req, res) => {
-  const { nom, prenom, date_rdv, specialite} = req.body;
+  const { nom, prenom, date_rdv, specialite } = req.body;
+
+  // Vérifie que nom et prénom ne contiennent que des lettres
+  const nameRegex = /^[A-Za-zÀ-ÿ\s'-]+$/;
+  if (!nameRegex.test(nom) || !nameRegex.test(prenom)) {
+    return res.status(400).send("Le nom et le prénom ne doivent contenir que des lettres.");
+  }
+
+  // Vérifie que la date est dans le futur
+  const now = new Date();
+  const rdvDate = new Date(date_rdv);
+  if (isNaN(rdvDate.getTime()) || rdvDate <= now) {
+    return res.status(400).send("La date du rendez-vous doit être dans le futur.");
+  }
+
   const sql = "INSERT INTO reservations (nom, prenom, date_rdv, specialite, statut) VALUES (?, ?, ?, ?, ?)";
   db.query(sql, [nom, prenom, date_rdv, specialite, "en attente"], (err, result) => {
     if (err) return res.status(500).send(err);
     res.send("Réservation enregistrée !");
   });
 });
+
 
 // Liste des rendez-vous
 app.get("/api/rdvs", (req, res) => {
